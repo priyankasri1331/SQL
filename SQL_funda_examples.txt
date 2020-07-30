@@ -1,0 +1,46 @@
+-- If there is a table with the same name, then drop it
+drop table INSTRUCTOR;
+
+--create a new table
+create table INSTRUCTOR(
+	     Ins_Id integer Primary key not null,
+	     lastname varchar(15) not null,
+	     firstname varchar(15) not null,
+	     city varchar(15),
+	     country char(2)
+	     );
+	     
+--insert single row into the table created	     
+insert into INSTRUCTOR
+(Ins_Id,lastname,firstname,city,country)
+values
+(1,'Ahuja','Rav','Toronto','CA');
+
+--insert multiple row into the table created
+insert into INSTRUCTOR
+(Ins_Id,lastname,firstname,city,country)
+values
+(2,'Chong','Raul','Toronto','CA'),
+(3,'Vasudevan','Hima','Chicago','US');
+
+--Select all rows from the table
+select * from INSTRUCTOR;
+
+--Select firstname,lastname and country where city is Toronto
+select firstname,lastname,country from INSTRUCTOR
+	where city = 'Toronto';
+	
+select count(*) from INSTRUCTOR
+	where city = 'Toronto';
+	
+--Change city for Rav to Markham
+update INSTRUCTOR set city='Markham'
+	where ins_id = 1;
+	
+--Delete a row
+delete from INSTRUCTOR
+	where ins_id = 2;
+
+--Retrieve all rows from the table
+select * from INSTRUCTOR;
+
