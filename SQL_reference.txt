@@ -1,0 +1,98 @@
+--Creating database instance - IBM DB2
+--Creating a table - general syntax - Data description language
+CREATE table tablename(
+	COLUMN1 datatype,
+	COLUMN2 datatype,
+	....
+	):
+
+--Example 2
+CREATE table country(
+	ID int NOT NULL,
+	CCODE char(2),
+	NAME varchar(60),
+	PRIMARY KEY (ID)
+	):
+	
+/*NOT NULL = it cannot contain empty value
+Primary key is the id. Primary key is unique identifier in
+a table.
+*/
+
+--Dropping a table
+DROP table country;
+
+---------------------------------------------------------------------
+
+/*SELECT - DML - Data manipulation Language - 
+retrieve data from a relational database table
+Find use of predicate
+SELECT is called a query
+Relational operation helps us in restricting the result set by allowing us 
+to use the clause WHERE. The WHERE clause always requires a predicate. 
+A predicate is conditioned evaluates to true, false or unknown. 
+Predicates are used in the search condition of the WHERE clause.
+*/
+
+SELECT COLUMN1,COLUMN2,.... from table1;
+
+SELECT * from COUNTRY;
+
+SELECT * from COUNTRY where ID < 5;
+
+SELECT * from COUNTRY where CCODE = 'CA';
+
+------------------------------------
+--Count,distinct,limit
+
+SELECT COUNT(*) from tablename; 
+
+-- Above gives number of rows.
+
+SELECT COUNT(COUNTRY) from MEDALS
+	where COUNTRY = 'CANADA.'
+--------------------------------------
+SELECT distinct COUNTRY from MEDALS
+	where MEDALTYPE = 'GOLD.'
+-------------------------------------
+SELECT * from tablename LIMIT 10
+
+SELECT * from MEDALS where YEAR = 2018 LIMIT 5
+
+-------------------------------------------------------------------------
+--INSERT - DML - single row or multiple row at a time
+INSERT INTO tablename
+(COLUMN1,COLUMN2....)
+VALUES
+(VALUE1,VALUE2,VALUE3.....)
+(VALUE11,VALUE22,VALUE33...)
+(....)
+
+--------------------------------------------------------------------------
+--UPDATE - DML
+UPDATE tablename
+SET [[ColumnName]=[Value]]
+where [COndition]
+
+--Example
+UPDATE author
+SET LASTNAME = KATTA
+	FIRSTNAME = LAKSHMI
+where AUTHOR_ID = A2
+
+--Note - If where clause not specified, all names will be changed
+--------------------------------------------------------------------------
+--DELETE - DML - deletes rows
+DELETE from tablename
+where[Condition]
+
+--Example
+DELETE from author
+where AUTHOR_ID in('A2','A3')
+
+--Note - If where clause not mentioned, all rows will be deleted
+--------------------------------------------------------------------------
+
+
+
+
