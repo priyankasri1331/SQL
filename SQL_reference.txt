@@ -92,7 +92,141 @@ where AUTHOR_ID in('A2','A3')
 
 --Note - If where clause not mentioned, all rows will be deleted
 --------------------------------------------------------------------------
+/*Like predicate in where clause is used to search for a pattern in column
+% sign is used to define missing letters - can be placed before/
+after/before and after the pattern. % sign is a wild card character used to 
+substitute other characters*/
+--Example
+select firstname from author
+where firstname like 'R%'
+----------------------------------------------------------------------------
+--Ranges -- Method1 has longer where clause
+
+--method1
+select title,pages from book
+where pages >= 290 and pages <=300
+
+--method2
+
+select title,pages from book
+where pages between 290 and 300
+
+--using a set of values. Using method 1 becomes long for more countries.
+--IN operator can be used instead
+
+--Method1
+select firstname,lastnem,country from author
+where country='AU' or country = 'BR'
+
+--Method2
+select firstname,lastname,country from author
+where country IN('AU','BR')
+------------------------------------------------------------------------------
+--Sorting
+
+--Order by clause is used to sort the result set by a specific column
+
+--Ascending order
+select title from book
+order by title
+
+--Descending order
+select title from book
+order by title desc
+
+--Sorting ny indicating column sequence number
+select title,pages from book
+order by 2
+--Above example sorts based on column 2 which is pages
+
+-------------------------------------------------------------------------
+--Grouping
+--Eliminating duplicates -- Distinct clause
+
+select distinct(country) from author
+--Finds how many countries are there in the list
+
+--Group by clause
+select country,count(country) from author group by country
+--This ouputs column name as 2.
+
+select country,count(country) as count from author group by country
+--Finds how many authors come from each country with output column name as count
+--------------------------------------------------------------------------------
+--Having clause - works only with group by clause - but where clause is for 
+--entire set
+
+select county, count(country) as count from author
+group by country having count(country) > 4
+--Check if there are more than four authors from the same country
+ 
+----------------------------------------------------------------------------------
+/*Loading files to created tables
+1. Create tables in SQL using DDL
+2. Load using load options from menu bar.*/
+---------------------------------------------------------------------------------
+ --Aggregate functions:
+ select sum(saleprice) from petsale
+ select max(quantity) from petsale
+ --Get the minimum value of ID column for dogs
+ select min(ID) from petsale where animal = 'Dog'
+ select avg(saleprice) from petsale
+ --Average saleprice per dog
+ select avg(saleprice/quantity) from petsale where animal = 'Dog'
+--Scalar functions - round(),length(),ucase,lcase
+select round(saleprice) from petsale
+--Length of each value in animal
+select length(animal) from petsale
+--Retrive Animal value in uppercase
+select ucase(animal) from petsale
+--Use function in a where clause 
+select * from petsale
+where lcase(animal) = 'cat'
+--didtinct() to get unique values
+select distinct(ucase(animal)) from petsale
+--------------------------------------------------------------------------------
+--Date and time
+--year(),month(),day(),dayofmonth(),dayofweek(),dayofyear(),week(),hour(),
+--minute(),second()
+select day(saldate) from petsale
+where animal ='cat'
+--number of sales during may month
+select count(*) from petsale
+where month(saledate) = '05'
+
+--what is it 3 days after each saledate?
+select(saledate+3 days) from petsale
+
+--current_date,current_time -- Special registers
+-- How many days have passed after sales
+select(current_date - saledate) from petsale
+
+--------------------------------------------------------------------------------
+--Subqueries and nested qeries
+select column1 from table
+where column2 = (select max(column2) from table
+
+-- retrieve list of employees who earn more than average salary
+select * from employees
+where salary > avg(salary)
+-- above will throw error, cannot evaluate aggregate functions in where clause
+
+--below is correct
+select * from employees 
+where salary < (select avg(salary) from employees);
 
 
+--Substitute column name with a subquery - column expressions
+--sub-queries in list of columns
 
+select emp_id,salary,
+(select avg(salary) from employees)as avg_salary
+from employees;
 
+--Sub-queries in from clause - derived tables or table expressions
+select * from
+(select emp_id,f_name,l_name,dep_id from employees)
+ as emp4all;
+ 
+
+---------------------------------------------------------------------------------
